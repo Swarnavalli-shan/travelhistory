@@ -1,0 +1,25 @@
+
+
+
+.ui.form {
+  margin:0 50px 20px 75px;
+}
+
+.ui.form > .field {
+margin-top:20px;
+}
+
+.text-area.field{
+  margin-top:100px;
+  width:75%;
+}
+.two.fields {
+  width:76%;
+}
+
+ .btn-clr.ui.button{
+  margin-top:20px;
+  margin-left:250px;
+  border-width: medium;
+  border-style:outset;
+ }
