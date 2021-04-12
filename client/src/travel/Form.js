@@ -63,7 +63,7 @@ const Form = ({ onUpdate, modifyRow, onModify }) => {
   return (
     <div className="ui form">
       <h1 style={{ textAlign: 'center' }}> TRAVEL HISTORY </h1>
-      <div class="two fields">
+      <div className="two fields">
         <div className="field">
           <label>From: </label>
           <input type="date" value={newRow.from} onChange={(e) => setNewRow({ ...newRow, from: e.target.value })} />

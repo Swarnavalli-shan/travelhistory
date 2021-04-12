@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import Display from './Display';
 import Form from './Form';
@@ -10,7 +10,17 @@ import './index.css';
    const [dataRows,setDataRows] = useState([]);
    const [modRow,setModRow] = useState({rowid:0,from:"",to:"",address:"",country:"",reason:""});
 
-   const onModifyDetail = (newRow) => {
+   const loadData = async () => {
+     const res = await fetch('http://localhost:5000/travel');
+     const body = await res.json();
+     setDataRows(body); 
+   };
+
+   useEffect(()=>{
+     loadData();
+   },[]);
+
+   const onModifyDetail = async (newRow) => {
      const tempDataRows = [...dataRows];
     tempDataRows.map((trow)=> {
       if(trow.rowid === newRow.rowid)
@@ -22,16 +32,43 @@ import './index.css';
         trow.reason=newRow.reason;
       }
     });
+    const res= await fetch('http://localhost:5000/travel/update',{
+      method : 'POST',
+      headers : {
+        'Content-Type' : 'application/json'
+      },
+      body:JSON.stringify(newRow)
+    });
+    const body =await res.text();
+    alert(body);
     setDataRows(tempDataRows);
    };
-   const onUpdateDetail = (newRow) => {
-
+   
+   const onUpdateDetail = async (newRow) => {
+     const res=await fetch('http://localhost:5000/travel/add',{
+          method : 'POST',
+          headers: {
+            'Content-Type' : 'application/json'
+          },
+          body:JSON.stringify(newRow)
+     });
+     const body= await res.text();
+     alert(body);
   setDataRows(dataRows => [...dataRows,newRow]);
    };
 
-   const onDeleteRows =(rowid) => {
+   const onDeleteRows =async (rowid) => {
      console.log('index',rowid);
      const tempRows = dataRows.filter((row) => row.rowid !== rowid);
+     const res = await fetch('http://localhost:5000/travel/delete',{
+       method : 'POST',
+       headers : {
+         'Content-Type' : 'application/json'
+       },
+       body : JSON.stringify({rowId:rowid})
+     });
+     const body = await res.text();
+     alert(body);
      setDataRows(tempRows);
    };
 
